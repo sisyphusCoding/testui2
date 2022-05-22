@@ -7,6 +7,11 @@ import Trial from '../components/Trial'
 const Home: NextPage = () => {
   return (
         <main className='min-h-screen min-w-full bg-gray-500'>
+      
+             <Head>
+              <title>Anish testing UIUX</title>
+              <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
               <VideoHeader />
               <Trial / >
         </main>
