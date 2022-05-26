@@ -25,16 +25,15 @@ const Trial: React.FC = () => {
 
   const container:any = {
     
-    hidden:{x:400,opacity:0} ,
+    hidden:{x:100,opacity:0} ,
 
     show: {
       x:0,opacity:1,
       transition: {
+        type:'spring',
         duration:1.5, 
-        staggerChildren : 0.45,
+        staggerChildren : 0.3,
         ease:[.6,.01,-.05,.95] ,
-        
-        
       }
     },
 
@@ -44,23 +43,23 @@ const Trial: React.FC = () => {
 
 
   const imageAnim:any = {
-    hidden: {x:400,opacity:0},
+    hidden: {x:100,opacity:0},
     show:{x:0,opacity:1 , transition:{  duration:.6 , type: 'spring', bounce : .3 , restDelta: 0.5 }},
-    exit:{x:400,opacity:0 , transition:{duration: .4}}
+    exit:{x:100,opacity:0 , transition:{duration: .4}}
   }
 
   const childAnim:any = {
-    hidden: {y:-100 , opacity: 0} , 
+    hidden: {x:-100 , opacity: 0} , 
     
-    show: {y:0 , opacity :1 , 
+    show: {x:0 , y:0 ,opacity :1 , 
           transition: {
               ease:[.6,.01,-.05,.95] , 
               duration:1.6 , type: 'spring', bounce: 0.40 ,
       },},
     
-    exit: {y:-100 , opacity:0 , 
+    exit: {x:500 , opacity:0 , 
             transition: { 
-        ease:[.6,.01,-.05,.95] , duration:1.5, type :'spring' ,
+        ease:[.6,.01,-.05,.95] , duration:1, type :'spring' , 
             },
           }
     }
