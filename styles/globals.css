@@ -35,9 +35,17 @@ a {
   box-sizing: border-box;
 }
 .navBar div {
-  @apply py-4 px-8 cursor-pointer  transition-all ease-in duration-100  hover:text-red-600 ;
+  @apply py-4 md:px-6 px-0 cursor-pointer  transition-all ease-in duration-100  hover:text-red-600 ;
+
 }
-.navBar{
-box-shadow: rgba(0,0,0,.6) 0 0 50px -5px ;
+
+h3{font-size: clamp(.8rem , 1.8vmin,1.8rem)}
+
+
+
+.follow{
+    transition-timing-function:  cubic-bezier(.07,.24,.34,1.18);
 }
-h3{font-size: clamp(.8rem , 1.8vmin,1.7rem)}
+
+
+

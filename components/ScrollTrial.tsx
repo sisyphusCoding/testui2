@@ -20,7 +20,7 @@ const ScrollTrial: React.FC = () => {
       title: 'Billing' , icon : GiGreekTemple,
           },
           {
-          title: 'Members' ,
+          title: 'Members with Mask' ,
           icon : FaHeadSideMask ,
         },
         {
@@ -94,8 +94,9 @@ const ScrollTrial: React.FC = () => {
     
       <ul
         className="navBar overflow-hidden
-        flex-col
-        md:flex-row relative px-2 py-1 bg-neutral-800 rounded-xl w-fit text-neutral-300 
+
+        flex-col shadow-[rgba(0,0,0,1)_0_10px_50px]
+        md:flex-row relative px-10 md:px-10 py-1 bg-neutral-800 rounded-xl w-fit text-neutral-300 
         flex md:items-center items-start justify-center"
 
         >
@@ -106,15 +107,15 @@ const ScrollTrial: React.FC = () => {
             className={` z-20
             hidden md:inline-block
             bg-red-500 
-            h-[5px]  marker top-1  transition-all duration-500 ease rounded-xl absolute `}
+            h-[5px]  marker top-1  transition-all duration-1000 follow rounded-xl absolute `}
             >
           
         </span>
 
       <span
           ref={verticalRef}
-        className="
-          transition-all ease duration-300
+        className=" follow
+          transition-all duration-1000
           inline-block md:hidden
           top-0 h-10 rounded-lg
           left-2 absolute w-2 bg-red-500"    
@@ -134,12 +135,13 @@ const ScrollTrial: React.FC = () => {
                 onMouseLeave={()=>setHover(active)}
                 className={`flex z-30
                   ${active ==i ? 'text-red-500' : ''}
-              items-center justify-center relative  gap-4  overflow-hidden`}> 
+              items-center justify-start md:justify-center relative  gap-[1vw] max-w-[80%]`}> 
                 <Icon size={'4vmin'} />  
-                 <h3 className="pointer-events-none">{e.title}</h3>
+                 <h3 className="pointer-events-none md:w-fit w-1/2 ">{e.title}</h3>
                 { active === i ? 
                  <span 
-                  className="absolute bottom-2 bg-red-500 h-1 w-1 rounded-xl" ></span> 
+                  
+                  className="absolute bottom-2 bg-red-500 h-[.1px] md:h-1 w-full md:w-1 rounded-xl " ></span> 
                 : null}
               </div>
           )
