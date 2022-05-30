@@ -9,8 +9,12 @@ return(
         min-h-screen min-w-full
         flex flex-col items-center justify-evenly gap-10
         bg-green-600'>
-        
-    <AddButton />
+
+    <section className='overflow-hidden' >  
+        <AddButton />
+     
+    </section>
+
      <Drag />
     </main>
 )
