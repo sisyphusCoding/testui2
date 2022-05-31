@@ -4,7 +4,7 @@ import Head from 'next/head'
 
 import VideoHeader from '../components/VideoHeader'
 import Trial from '../components/Trial'
-import ScrollTrial from '../components/ScrollTrial'
+
 import UIUX from '../components/UIUX'
 
 
