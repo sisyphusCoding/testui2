@@ -4,6 +4,7 @@ import React, { useEffect, useState  , useRef} from "react";
 import {motion ,AnimatePresence, animate} from 'framer-motion'
 import {FiPlus , FiMinus} from 'react-icons/fi'
 import { count } from "console";
+import { eventNames } from "process";
 
 
 
@@ -69,7 +70,25 @@ const AddButton = () => {
 
 
   const parentRef = useRef<HTMLDivElement>(null)
+  const draggerRef = useRef<HTMLDivElement>(null)
 
+
+  const [initialMouse,setInitialMouse] = useState<number>(0) 
+
+  const getThis = (val:any) => {
+ 
+
+    if(val > initialMouse){
+      setTInputValue((inputValue) => inputValue + 1)
+    }else{
+      setTInputValue((inputValue) => inputValue - 1)
+    }
+    
+
+
+  }
+
+  
 
 
   return(
@@ -105,8 +124,7 @@ const AddButton = () => {
                 text-4xl"
               >ADD</motion.button>
         : 
-            
-             <AnimatePresence exitBeforeEnter>
+            <AnimatePresence>
               <motion.button 
                 variants={minusAnim}
                 initial='initial'
@@ -115,10 +133,12 @@ const AddButton = () => {
                 onClick={()=>setTInputValue((inputValue) => inputValue - 1)}  
                 className="hover:text-red-600" ><FiMinus size={45} /></motion.button>
                 
-                <AnimatePresence exitBeforeEnter>
                   <motion.div
+                    key={'minus'}
+                    ref={draggerRef}
                     drag='x'
-                    onDrag={(event,info)=>console.log(info.point.x,info.point.y)}
+                    onDragStart={(e,info)=>setInitialMouse(info.point.x)}
+                    onDragEnd={(e,info)=>getThis(info.point.x)}
                     dragSnapToOrigin={true}
                     whileDrag={{scale:1.2 }}
                     dragConstraints={parentRef}
@@ -139,8 +159,8 @@ const AddButton = () => {
                       </motion.h2>
 
                     </motion.div> 
-                  </AnimatePresence>  
               <motion.button
+                key={'add'}
                 variants={addAnim}
                 initial={inputValue > prevValue? 'initial' : 'exit' }                 
                 animate='animate'
@@ -148,8 +168,7 @@ const AddButton = () => {
                 onClick={()=>setTInputValue((inputValue) => inputValue + 1)}  
                 className="hover:text-green-700" ><FiPlus size={45}/></motion.button>
             
-          </AnimatePresence> 
-        
+        </AnimatePresence>
          }
   </AnimatePresence>   
    
