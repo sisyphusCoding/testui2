@@ -20,11 +20,11 @@ const Home: NextPage = () => {
             </Head>
 
 
-
-
-            <VideoHeader />
-            <Trial / >
             <UIUX />
+
+
+
+
 
           
 

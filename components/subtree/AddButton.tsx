@@ -4,14 +4,19 @@ import React, { useEffect, useState  , useRef} from "react";
 import {motion ,AnimatePresence, animate} from 'framer-motion'
 import {FiPlus , FiMinus} from 'react-icons/fi'
 import { count } from "console";
-import { eventNames } from "process";
+import { eventNames, exit } from "process";
 
+const middleText:any = {
+  initial: {y:150 , opacity: 0  } ,
+  animate : {y:0 , opacity: 1 , transition:{type:'spring' , damping:9} } ,
+  exit: {y:150 , opacity: 0  , transition:{duration:.8}  } ,
 
+}
 
 const addText:any = {
-  initial: {y:-50 , opacity: 0 ,transiton: {duration :10} } ,
-  animate : {y:0 , opacity: 1 , transition:{type:'spring'} } ,
-  exit: {y:-50 , opacity: 0 ,transiton: {duration :10} } ,
+  initial: {y:-50 , opacity: 0 ,transiton: {duration :1} } ,
+  animate : {y:0 , opacity: 1 , transition:{type:'spring' , stiffness:300} } ,
+  exit: {y:-50 , opacity: 0 ,transiton: {duration :1} } ,
 
 }
 
@@ -23,13 +28,17 @@ const childAnim:any = {
 
 const minusAnim:any = {
   initial: {x:-50,opacity:0},
-  animate:{x:0,opacity:1 } ,
-  exit:{x:50,opacity:0}
+  animate:{x:0,opacity:1
+    ,transition:{type:'spring',stiffness:500,}
+    } ,
+  exit:{x:-50,opacity:0}
 }
 
 const addAnim:any = {
   initial: {x:50,opacity:0},
-  animate:{x:0,opacity:1 } ,
+  animate:{x:0,opacity:1
+  ,transition:{type:'spring',stiffness:500}} ,
+    
   exit:{x:50,opacity:0}
 }
 
@@ -37,7 +46,7 @@ const addAnim:any = {
 const countAnim = {
   initial: {y:80 , opacity: 0},
   
-  animate: {y:0 , opacity: 1 , transition:{damping: 20 , type:'spring' , stiffness:100 }},
+  animate: {y:0 , opacity: 1 , transition:{damping: 20 , type:'spring' , stiffness:200 }},
 
   exit: {y:-80, opacity:0}
 }
@@ -108,14 +117,17 @@ const AddButton = () => {
                 ${toggle? 'justify-between' : 'justify-center' }   `}
         >
   
-
-<AnimatePresence exitBeforeEnter>                            
+      <AnimatePresence exitBeforeEnter>
           {!toggle? 
+
+
           <motion.button
+              key={'add'}
               variants={addText} 
               initial='initial' animate='animate' exit='exit'
               onClick={()=>{setToggle(true)}}
               className="      
+                w-full
                 hover:text-red-500
                 transition-colors ease duration-200
                 font-bold 
@@ -123,18 +135,25 @@ const AddButton = () => {
                 font-mono
                 text-4xl"
               >ADD</motion.button>
+
+
         : 
-            <AnimatePresence>
+    <>
               <motion.button 
+                key={'minus'}
                 variants={minusAnim}
                 initial='initial'
                 animate='animate'
                 exit='exit' 
                 onClick={()=>setTInputValue((inputValue) => inputValue - 1)}  
-                className="hover:text-red-600" ><FiMinus size={45} /></motion.button>
+                className="hover:text-red-600" ><FiMinus size={45} />
+
+              </motion.button>
                 
                   <motion.div
-                    key={'minus'}
+                    variants={middleText}
+                    initial='initial' animate='animate' exit='exit'
+                    key={'middlewrap'}
                     ref={draggerRef}
                     drag='x'
                     onDragStart={(e,info)=>setInitialMouse(info.point.x)}
@@ -143,7 +162,7 @@ const AddButton = () => {
                     whileDrag={{scale:1.2 }}
                     dragConstraints={parentRef}
                     dragElastic={false}
-                    dragTransition={{bounceDamping:9,bounceStiffness:400}}
+                    dragTransition={{bounceDamping:4,bounceStiffness:300}}
                     className="overflow-hidden z-40
                       py-2 px-4 cursor-grab rounded-2xl bg-[rgba(0,0,0,.2)] 
                       backdrop-filter backdrop-blur-[1.5px]   
@@ -167,11 +186,10 @@ const AddButton = () => {
                 exit={inputValue > prevValue? 'exit' : 'initial' } 
                 onClick={()=>setTInputValue((inputValue) => inputValue + 1)}  
                 className="hover:text-green-700" ><FiPlus size={45}/></motion.button>
-            
-        </AnimatePresence>
+      </>      
          }
-  </AnimatePresence>   
    
+        </AnimatePresence>
            </div>
       </section>
   )
