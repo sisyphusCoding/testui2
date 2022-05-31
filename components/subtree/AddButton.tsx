@@ -34,11 +34,11 @@ const addAnim:any = {
 
 
 const countAnim = {
-  initial: {y:50 , opacity: 0},
+  initial: {y:80 , opacity: 0},
   
-  animate: {y:0 , opacity: 1},
+  animate: {y:0 , opacity: 1 , transition:{damping: 20 , type:'spring' , stiffness:100 }},
 
-  exit: {y:-50, opacity:0}
+  exit: {y:-80, opacity:0}
 }
 
 const AddButton = () => {
@@ -68,16 +68,22 @@ const AddButton = () => {
  const prevValue:any = usePrevious(inputValue)
 
 
+  const parentRef = useRef<HTMLDivElement>(null)
+
+
+
   return(
       <section>
 
         <div
+            
+              ref={parentRef}
             className={`outline-none 
-                px-4  overflow-clip
+                px-4 overflow-hidden 
                 ease transition-colors duration-200 
                 py-4 
-                rounded-[2rem] shadow-[inset_-8px_-8px_8px_#848484_,_inset_8px_8px_8px_#ffffff]
-                bg-slate-200
+                rounded-3xl 
+                text-stone-300 bg-stone-800 
                 w-56 row 
                 flex items-center h-20
                 ${toggle? 'justify-between' : 'justify-center' }   `}
@@ -86,7 +92,7 @@ const AddButton = () => {
 
 <AnimatePresence exitBeforeEnter>                            
           {!toggle? 
-          <motion.button 
+          <motion.button
               variants={addText} 
               initial='initial' animate='animate' exit='exit'
               onClick={()=>{setToggle(true)}}
@@ -110,11 +116,29 @@ const AddButton = () => {
                 className="hover:text-red-600" ><FiMinus size={45} /></motion.button>
                 
                 <AnimatePresence exitBeforeEnter>
+                  <motion.div
+                    drag='x'
+                    onDrag={(event,info)=>console.log(info.point.x,info.point.y)}
+                    dragSnapToOrigin={true}
+                    whileDrag={{scale:1.2 }}
+                    dragConstraints={parentRef}
+                    dragElastic={false}
+                    dragTransition={{bounceDamping:9,bounceStiffness:400}}
+                    className="overflow-hidden z-40
+                      py-2 px-4 cursor-grab rounded-2xl bg-[rgba(0,0,0,.2)] 
+                      backdrop-filter backdrop-blur-[1.5px]   
+                      "  
+                    >               
                   <motion.h2
                       key={inputValue}
                   variants={countAnim}
-                  initial='initial' animate='animate'exit='exit' 
-                      className="text-4xl font-bold font-mono text-center w-10" >{inputValue}</motion.h2>       
+                  initial={inputValue > prevValue? 'initial' : 'exit' }
+                  animate='animate' 
+                  exit={inputValue > prevValue? 'exit' : 'initial' } 
+                      className="text-4xl  font-bold font-mono text-center w-10" >{inputValue}
+                      </motion.h2>
+
+                    </motion.div> 
                   </AnimatePresence>  
               <motion.button
                 variants={addAnim}

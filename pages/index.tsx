@@ -25,7 +25,7 @@ const Home: NextPage = () => {
             <VideoHeader />
             <Trial / >
             <UIUX />
-          <ScrollTrial />      
+
           
 
         </main>
