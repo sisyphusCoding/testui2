@@ -1,5 +1,5 @@
 import { setConfig } from "next/config";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {BsFillCaretLeftFill , BsFillCaretRightFill} from 'react-icons/bs'
 
@@ -10,14 +10,20 @@ import {usePrevious} from 'react-use'
 const Carousel: React.FC = () => {
 
     let [count,setCount] = useState<number>(0)
-    
-    let prevCount = usePrevious(count)
-      
+   
 
+    let prevCount:any = 0
+      
+  
+    
+  
+    prevCount = usePrevious(count)
+
+    
  
     let direction = count > prevCount?  'inc' : 'dec'
 
-    console.log(direction === 'inc') 
+  
 
 let variants = { 
   hidden: (direction:any) => ({x: direction ==='inc'? '150%' : '-150%'}),
